@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 // NativeBase Components
 import {
@@ -39,8 +40,9 @@ class CoffeeDetail extends Component {
   };
 
   render() {
-    if (!coffeeshops) return <Content />;
-    const coffeeshop = coffeeshops[0];
+    const { coffeeShops, loading } = this.props.coffeeReducer;
+    if (loading) return <Content />;
+    const coffeeshop = coffeeShops[0];
     return (
       <Content>
         <List>
@@ -93,4 +95,8 @@ class CoffeeDetail extends Component {
   }
 }
 
-export default CoffeeDetail;
+const mapStateToProps = state => ({
+  coffeeReducer: state.coffeeReducer
+});
+
+export default connect(mapStateToProps)(CoffeeDetail);
